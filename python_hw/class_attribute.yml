@@ -1,27 +1,13 @@
 cat:
-  - cat1:
-      name: Tom
-      color: Bule
-      gender: Man
-      age: 5
-      hair: 短发
-    cat2:
-      name: Jerry
-      color: Red
-      gender: Man
-      age: 4
-      hair: 短发
+  name: Tom
+  color: Bule
+  gender: Man
+  age: 5
+  hair: 短发
 
 dog:
-  - dog1:
-      name: Cast
-      color: Yellow
-      gender: Man
-      age: 5
-      hair: 长发
-    dog2:
-      name: Li
-      color: Blown
-      gender: Woman
-      age: 5
-      hair: 长发
+  name: Cast
+  color: Yellow
+  gender: Man
+  age: 5
+  hair: 长发

@@ -50,17 +50,17 @@ class Dog(Animal):
 with open('class_attribute.yml', encoding='UTF-8')as f:
     datas = yaml.safe_load(f)
 
-print(datas["dog"][0]['dog1'])
+# print(datas["dog"])#测试代码
 
-cat = Cat(datas['cat'][0]['cat1']['name'], datas['cat'][0]['cat1']['color']
-          , datas['cat'][0]['cat1']['age'], datas['cat'][0]['cat1']['gender'])
+cat = Cat(datas['cat']['name'], datas['cat']['color']
+          , datas['cat']['age'], datas['cat']['gender'])
 # 调用抓猫鼠方法
 cat.catch_mouse()
 # 打印【猫猫的姓名，颜色，年龄，性别，毛发，捉到了老鼠】
 print(f'猫猫名:{cat.name},颜色：{cat.color}，性别：{cat.gender},毛发：{cat.hair}，抓到老鼠了')
 
-dog = Dog(datas['dog'][0]['dog1']['name'], datas['dog'][0]['dog1']['color']
-          , datas['dog'][0]['dog1']['age'], datas['dog'][0]['dog1']['gender'])
+dog = Dog(datas['dog']['name'], datas['dog']['color']
+          , datas['dog']['age'], datas['dog']['gender'])
 
 # 调用【会看家】的方法
 dog.watch_home()
