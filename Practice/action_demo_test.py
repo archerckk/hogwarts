@@ -1,5 +1,7 @@
 from time import sleep
 
+import allure
+import pytest
 from selenium import webdriver
 from selenium.webdriver import ActionChains, TouchActions
 from selenium.webdriver.common.by import By
@@ -8,6 +10,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
 
+@allure.feature('自动化测试demo')
 class Test_demo:
     def setup(self):
         # 解决w3c错误的额外参数
@@ -116,6 +119,7 @@ class Test_demo:
         self.driver.switch_to.frame('iframeResult')
         assert self.driver.find_element_by_id('draggable').text == '请拖拽我！'
 
+    @allure.story('JS滑动点击')
     def test_js_scroll(self):
         self.driver.get('http://www.baidu.com')
         self.driver.find_element(By.ID, 'kw').send_keys('selenium test')
@@ -128,6 +132,7 @@ class Test_demo:
             print(self.driver.execute_script(code))
         # print(self.driver.execute_script('return document.title'))
 
+    @allure.story('测试12306的时间修改')
     def test_time_value(self):
         self.driver.get('https://www.12306.cn/index/')
         self.driver.execute_script("document.getElementById('train_date').removeAttribute('readonly')")
@@ -137,3 +142,7 @@ class Test_demo:
         print(self.driver.execute_script("return document.getElementById('train_date').value"))
         # print(self.driver.find_element_by_id('train_date').text)
         sleep(3)
+
+
+if __name__ == '__main__':
+    pytest.main()
