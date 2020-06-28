@@ -1,27 +1,26 @@
 from time import sleep
 
-from Page_Object.Pages.main import Main
+from Page_Object.pages.main_page import MainPage
 
 
-
-class Test_main:
+class TestMain:
 
     def setup(self):
-        self.main=Main()
+        self.main = MainPage()
 
     def teardown(self):
         self.main._driver.quit()
 
     def test_main_login_click(self):
-        assert self.main.goto_login().judge_login_jump_success()==True
+        assert self.main.goto_login().judge_login_jump_success() == True
 
     def test_main_register_click_success(self):
-        assert  self.main.goto_register().judge_register_jump_success()==True
+        assert self.main.goto_register().judge_register_jump_success() == True
 
     def test_register_info_form(self):
         # result=self.main.goto_register().register()
         # assert 'test_name','test_manager'==result
-        assert ('test_name','test_manager')==self.main.goto_register().register()
+        assert ('test_name', 'test_manager') == self.main.goto_register().register()
         print(self.main.count)
 
     def test_init_count(self):
@@ -35,11 +34,14 @@ class Test_main:
         # result 返回的是删除的目标用户姓名，跟新的用户名字列表信息
         result = self.main.goto_login().scan().go_to_contract().del_member()
 
+        del_target_name = result[0]
+        current_user_list = result[1]
+
         # 断言已删除用户不在新的名字列表信息里面
-        assert result[0] not in result[1]
+        assert del_target_name not in current_user_list
 
     # 测试通讯录上传文件成功
     def test_upload_file_success(self):
-        result = self.main.goto_login().scan().go_to_address_book().import_address_book_file()
-        print(result)
-        assert result == '重新上传'
+        upload_success_info = self.main.goto_login().scan().go_to_address_book().import_address_book_file()
+        print(upload_success_info)
+        assert upload_success_info == '重新上传'

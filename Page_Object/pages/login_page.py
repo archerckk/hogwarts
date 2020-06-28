@@ -2,13 +2,13 @@ import json
 import os
 from time import sleep
 
-from Page_Object.Pages.base_page import Base_Page
-from Page_Object.Pages.index import Index
-from Page_Object.Pages.register import Register
+from Page_Object.pages.base_page import BasePage
+from Page_Object.pages.index_page import IndexPage
+from Page_Object.pages.register_page import RegisterPage
 from selenium.webdriver.common.by import By
 
 
-class Login(Base_Page):
+class LoginPage(BasePage):
 
     def take_cookies(self):
         # 重新获取cookie时的调试代码
@@ -41,21 +41,21 @@ class Login(Base_Page):
         # 持续刷新页面
         while True:
             self._driver.refresh()
-            result = self.find(By.ID, 'menu_index')
+            result = self._find(By.ID, 'menu_index')
             if result:
                 break
 
         # 调试用测试代码
         # sleep(1000000)
 
-        return Index(self._driver)
+        return IndexPage(self._driver)
     def goto_register(self):
-        self.find(By.CSS_SELECTOR,'.login_registerBar_link').click()
+        self._find(By.CSS_SELECTOR, '.login_registerBar_link').click()
 
-        return Register(self._driver)
+        return RegisterPage(self._driver)
 
     def judge_login_jump_success(self):
-        result = self.finds(By.CSS_SELECTOR, '.login_stage_title_text')
+        result = self._finds(By.CSS_SELECTOR, '.login_stage_title_text')
 
         if result == []:
             return False

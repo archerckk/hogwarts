@@ -2,17 +2,17 @@ from time import sleep
 
 from selenium.webdriver.common.by import By
 
-from Page_Object.Pages.base_page import Base_Page
+from Page_Object.pages.base_page import BasePage
 
 
-class Contract(Base_Page):
+class ContractPage(BasePage):
 
     # def add_member(self):
 
     def del_member(self):
-        check_box_list = self.finds(By.CSS_SELECTOR, '#member_list tr td>input[class="ww_checkbox"]')
-        name_list = [name.text for name in self.finds(By.CSS_SELECTOR, '#member_list tr td:nth-child(2)')]
-        del_icon = self.finds(By.CSS_SELECTOR, "a[class='qui_btn ww_btn js_delete']")[0]
+        check_box_list = self._finds(By.CSS_SELECTOR, '#member_list tr td>input[class="ww_checkbox"]')
+        name_list = [name.text for name in self._finds(By.CSS_SELECTOR, '#member_list tr td:nth-child(2)')]
+        del_icon = self._finds(By.CSS_SELECTOR, "a[class='qui_btn ww_btn js_delete']")[0]
 
         # length=len(check_box_list)
 
@@ -25,10 +25,10 @@ class Contract(Base_Page):
         del_icon.click()
         sleep(1)
         # 点击确认删除的确定按钮
-        self.find(By.CSS_SELECTOR, 'a[class="qui_btn ww_btn ww_btn_Blue"]').click()
+        self._find(By.CSS_SELECTOR, 'a[class="qui_btn ww_btn ww_btn_Blue"]').click()
         sleep(1)
         # 获取到新的所有用户信息名字列表
-        new_name_list = [name.text for name in self.finds(By.CSS_SELECTOR, '#member_list tr td:nth-child(2)')]
+        new_name_list = [name.text for name in self._finds(By.CSS_SELECTOR, '#member_list tr td:nth-child(2)')]
         print(new_name_list)
         # sleep(200)
         # 断言删除的用户不在新获取的用户列表信息里面
