@@ -10,13 +10,20 @@ class BasePage:
     _error_count = 0
     _max_error_count = 10
     _parames = {}
+    _path = ''
 
     def __init__(self, driver: WebDriver = None):
         self._driver = driver
 
+        if self._path == '':
+            self._step = [{}]
+        else:
+            self._step = self._get_action_datas(self._path)
+
     def _find(self, by, locator=None):
         try:
             self._error_count = 0
+            print(by, locator)
             element = self._driver.find_element(*by) if isinstance(by, tuple) else self._driver.find_element(by,
                                                                                                              locator)
             return element
@@ -45,18 +52,23 @@ class BasePage:
                     return self._find(by, locator)
             raise e
 
-    def _steps(self, path):
+    def _get_action_datas(self, path=None):
         with open(path, encoding='utf-8')as f:
             steps: list[dict] = yaml.safe_load(f)
+            return steps
 
-            for step in steps:
-                if 'by' in step.keys():
-                    element = self._find(step['by'], step['locator'])
+    def _steps(self, steps: dict):
+        for step in steps:
+            if 'by' in step.keys():
+                element = self._find(step['by'], step['locator'])
 
-                    if 'click' == step['action']:
-                        element.click()
-                    elif 'send' == step['action']:
-                        content: str = self._parames['value']
-                        for param in self._parames:
-                            content = content.replace(f'{param}', self._parames[param])
-                        element.send_keys(content)
+                if 'click' == step['action']:
+                    element.click()
+                elif 'send' == step['action']:
+                    content: str = step['value']
+                    print(content)
+                    for param in self._parames:
+                        print(self._parames)
+                        print(param)
+                        content = content.replace('{%s}' % param, self._parames[param])
+                    element.send_keys(content)

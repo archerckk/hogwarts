@@ -1,3 +1,4 @@
-- by: id
-  locator: 'com.xueqiu.android:id/action_search'
-  action: click
+search:
+  - by: id
+    locator: 'com.xueqiu.android:id/action_search'
+    action: click

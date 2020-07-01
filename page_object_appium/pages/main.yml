@@ -1,3 +1,5 @@
-- by: xpath
-  locator: '//*[@text="行情"]'
-  action: click
+market:
+  - by: xpath
+    locator: '//*[@text="行情"]'
+    action: click
+
