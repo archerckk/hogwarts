@@ -8,3 +8,14 @@ mumu_xueqiu:
   noReset: true
   unicodeKeyBoard: true
   resetKeyBoard: true
+
+mumu_wework:
+  automationName: UiAutomator2
+  deviceName: 127.0.0.1:7555
+  platformName: Android
+  platformVersion: 6.0.1
+  appPackage: com.tencent.wework
+  appActivity: com.tencent.wework.launch.LaunchSplashActivity
+  noReset: true
+  unicodeKeyBoard: true
+  resetKeyBoard: true
