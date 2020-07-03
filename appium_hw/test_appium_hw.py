@@ -37,7 +37,6 @@ class TestWeWork:
 
     def teardown(self):
         self.driver.quit()
-        pass
 
     @pytest.mark.parametrize('name,gender,phone', get_data())
     def test_add_member(self, name, gender, phone):
@@ -47,7 +46,8 @@ class TestWeWork:
         self.driver.find_element_by_xpath('//*[@text="姓名　"]/../android.widget.EditText[@text="必填"]').send_keys(name)
         self.driver.find_element_by_xpath('//*[@text="性别"]/..//android.widget.LinearLayout').click()
 
-        # print(self.driver.find_element_by_xpath('//*[@text="男"]').text)
+        WebDriverWait(self.driver, 10).until(expected_conditions.presence_of_all_elements_located(
+            (By.XPATH, '//*[contains(@text,"男")or contains(@text,"女")]')))
         if gender == '男':
             self.driver.find_element_by_xpath('//*[@text="男"]').click()
         else:
@@ -64,32 +64,42 @@ class TestWeWork:
         self.driver.find_elements_by_xpath('//android.widget.LinearLayout//android.widget.RelativeLayout'
                                            '//android.widget.TextView')[2].click()
 
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.visibility_of_all_elements_located(
+                (By.XPATH, '//android.widget.ListView/android.widget.RelativeLayout')))
+
+        sleep(5)
+
         member_row_elements: list = self.driver.find_elements_by_xpath(
             '//android.widget.ListView/android.widget.RelativeLayout')
         member_row_elements.pop(0)
 
-        old_user_name_list_elements = self.driver.find_elements_by_xpath(
-            '//android.widget.ListView/android.widget.RelativeLayout//android.widget.TextView')
-        length = len(old_user_name_list_elements)
+        length = len(member_row_elements)
         print('待删除的用户列表长度为:', length)
         print("删除的目标用户为：", name)
-        # for i in range(length):
-        # if name==old_user_name_list_elements[i].text:
-        member_row_elements[0].find_elements_by_xpath('//android.widget.ImageView')[1].click()
-        self.driver.find_element_by_xpath('//*[@text="删除成员"]').click()
-        self.driver.find_element_by_xpath('//*[@text="确定"]').click()
+        for i in range(length):
+            cur_username = self.driver.find_elements_by_xpath(
+                '//android.widget.ListView/android.widget.RelativeLayout//android.widget.TextView')[i].text
+            print("获取到的用户名信息为：", cur_username)
 
-        # target_user_name = member_row_elements[0].('//android.widget.TextView')[0].text
+            if name == cur_username:
+                image_icon_element_list = member_row_elements[i].find_elements_by_xpath('//android.widget.ImageView')
+                print('icon列表', image_icon_element_list)
+                image_icon_element_list[1].click()
+                self.driver.find_element_by_xpath('//*[@text="删除成员"]').click()
+                self.driver.find_element_by_xpath('//*[@text="确定"]').click()
+            else:
+                continue
 
-        return_to_member_list_loc = (By.XPATH, "//android.widget.ListView//android.widget.LinearLayout")
+        return_to_member_list_loc = (
+            By.XPATH, "//android.widget.ListView/android.widget.RelativeLayout//android.widget.TextView")
+
         WebDriverWait(self.driver, 10).until(
-            expected_conditions.element_to_be_clickable(return_to_member_list_loc))
+            expected_conditions.visibility_of_all_elements_located(return_to_member_list_loc))
 
-        # new_member_name_elements_list = self.driver.find_elements_by_xpath(
-        #     "//android.widget.ListView//android.widget.TextView")
-        new_member_name_elements_list = self.driver.find_elements(By.XPATH,
-                                                                  "//android.widget.ListView//ndroid.widget.LinearLayout")
-        # new_member_name_elements_list = self.driver.find_elements(MobileBy.XPATH,"//android.widget.ListView//android.widget.TextView")
+        sleep(5)
+
+        new_member_name_elements_list = self.driver.find_elements(*return_to_member_list_loc)
 
         new_member_name_list = [name_element.text for name_element in new_member_name_elements_list]
         print('现在的用户列表为：', new_member_name_list)
