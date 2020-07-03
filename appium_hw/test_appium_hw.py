@@ -1,6 +1,9 @@
 from time import sleep
+
+import pytest
 import yaml
 from appium import webdriver
+from appium.webdriver.common.mobileby import MobileBy
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
@@ -18,52 +21,76 @@ from selenium.webdriver.support.wait import WebDriverWait
 """
 
 
+def get_data():
+    with open('member_data.yml', encoding='UTF-8')as f:
+        datas = yaml.safe_load(f)
+    return datas
+
+
 class TestWeWork:
 
     def setup(self):
         with open('phone.yml')as f:
             desired_caps = yaml.safe_load(f)['mumu_wework']
         self.driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
-        self.driver.implicitly_wait(5)
+        self.driver.implicitly_wait(10)
 
     def teardown(self):
         self.driver.quit()
+        pass
 
-    def test_add_member(self):
+    @pytest.mark.parametrize('name,gender,phone', get_data())
+    def test_add_member(self, name, gender, phone):
         self.driver.find_element_by_xpath('//*[@class="android.widget.LinearLayout"]//*[@text="通讯录"]').click()
         self.driver.find_element_by_xpath('//*[@text="添加成员"]').click()
         self.driver.find_element_by_xpath('//*[@text="手动输入添加"]').click()
-        self.driver.find_element_by_xpath('//*[@text="姓名　"]/../android.widget.EditText[@text="必填"]').send_keys('xf_001')
+        self.driver.find_element_by_xpath('//*[@text="姓名　"]/../android.widget.EditText[@text="必填"]').send_keys(name)
         self.driver.find_element_by_xpath('//*[@text="性别"]/..//android.widget.LinearLayout').click()
 
         # print(self.driver.find_element_by_xpath('//*[@text="男"]').text)
-        self.driver.find_element_by_xpath('//*[@text="女"]').click()
-        self.driver.find_element_by_xpath('//*[@text="手机号"]').send_keys(13870000001)
+        if gender == '男':
+            self.driver.find_element_by_xpath('//*[@text="男"]').click()
+        else:
+            self.driver.find_element_by_xpath('//*[@text="女"]').click()
+        self.driver.find_element_by_xpath('//*[@text="手机号"]').send_keys(phone)
         self.driver.find_element_by_xpath('//*[@text="保存"]').click()
         add_toast_info = self.driver.find_element_by_xpath("//*[@class='android.widget.Toast']").text
 
         assert add_toast_info == '添加成功'
 
-    def test_del_member(self):
+    @pytest.mark.parametrize('name,gender,phone', get_data())
+    def test_del_member(self, name, gender, phone):
         self.driver.find_element_by_xpath('//*[@class="android.widget.LinearLayout"]//*[@text="通讯录"]').click()
         self.driver.find_elements_by_xpath('//android.widget.LinearLayout//android.widget.RelativeLayout'
                                            '//android.widget.TextView')[2].click()
-        sleep(2)
+
         member_row_elements: list = self.driver.find_elements_by_xpath(
             '//android.widget.ListView/android.widget.RelativeLayout')
         member_row_elements.pop(0)
-        print(member_row_elements)
-        target_user_name = member_row_elements[0].find_elements_by_xpath('//android.widget.LinearLayout')[0].text
-        print(target_user_name)
 
+        old_user_name_list_elements = self.driver.find_elements_by_xpath(
+            '//android.widget.ListView/android.widget.RelativeLayout//android.widget.TextView')
+        length = len(old_user_name_list_elements)
+        print('待删除的用户列表长度为:', length)
+        print("删除的目标用户为：", name)
+        # for i in range(length):
+        # if name==old_user_name_list_elements[i].text:
         member_row_elements[0].find_elements_by_xpath('//android.widget.ImageView')[1].click()
         self.driver.find_element_by_xpath('//*[@text="删除成员"]').click()
         self.driver.find_element_by_xpath('//*[@text="确定"]').click()
 
-        return_to_member_list_loc = (By.XPATH, '//android.widget.ListView//android.widget.LinearLayout')
-        WebDriverWait(self.driver, 8).until(expected_conditions.
-                                            visibility_of_all_elements_located(return_to_member_list_loc))
+        # target_user_name = member_row_elements[0].('//android.widget.TextView')[0].text
 
-        new_member_name_elements_list = self.driver.find_elements(return_to_member_list_loc)
-        new_member_name_list = [name.text for name in new_member_name_elements_list]
-        assert target_user_name not in new_member_name_list
+        return_to_member_list_loc = (By.XPATH, "//android.widget.ListView//android.widget.LinearLayout")
+        WebDriverWait(self.driver, 10).until(
+            expected_conditions.element_to_be_clickable(return_to_member_list_loc))
+
+        # new_member_name_elements_list = self.driver.find_elements_by_xpath(
+        #     "//android.widget.ListView//android.widget.TextView")
+        new_member_name_elements_list = self.driver.find_elements(By.XPATH,
+                                                                  "//android.widget.ListView//ndroid.widget.LinearLayout")
+        # new_member_name_elements_list = self.driver.find_elements(MobileBy.XPATH,"//android.widget.ListView//android.widget.TextView")
+
+        new_member_name_list = [name_element.text for name_element in new_member_name_elements_list]
+        print('现在的用户列表为：', new_member_name_list)
+        assert name not in new_member_name_list
