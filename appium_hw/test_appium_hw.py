@@ -1,9 +1,6 @@
-from time import sleep
-
 import pytest
 import yaml
 from appium import webdriver
-from appium.webdriver.common.mobileby import MobileBy
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
