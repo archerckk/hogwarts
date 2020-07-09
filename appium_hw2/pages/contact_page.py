@@ -15,5 +15,5 @@ class ContactPage(BasePage):
         return AddMemberMethodPage(self._driver)
 
     def go_to_manage_contact(self):
-        self._driver.find_elements(*self._go_to_manage_contact_loc)[2].click()
+        self._driver.find_elements(*self._go_to_manage_contact_loc)[1].click()
         return ManageContactPage(self._driver)
