@@ -18,6 +18,6 @@ class TestWework:
     @pytest.mark.parametrize('name,gender,phone', datas)
     def test_add_member(self, name, gender, phone):
         add_success_toast = self.app.start().main().goto_contacts().add_member().manual_add() \
-            .edit_name().edit_gender().edit_phone_number().save_info().get_add_success_toast()
+            .edit_name(name).edit_gender(gender).edit_phone_number(phone).save_info().get_add_success_toast()
 
         assert add_success_toast == '添加成功'
