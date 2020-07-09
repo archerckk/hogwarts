@@ -16,6 +16,7 @@ class EditInfoPage(BasePage):
         return self
 
     def edit_gender(self, gender):
+        self.find_and_click(*self._gender_loc)
         if gender == '男':
             self.find_and_click(*self._gender_man_loc)
         else:

@@ -9,9 +9,12 @@ class BasePage:
     def __init__(self, driver: WebDriver = None):
         self._driver = driver
 
-    def find(self, *locator):
-        return WebDriverWait(self._driver, 15).until(expected_conditions.element_to_be_clickable(
-            self._driver.find_element(*locator)))
+    def find(self, by, locator=None):
+        element = WebDriverWait(self._driver, 15).until(expected_conditions.presence_of_element_located(by)) if \
+            isinstance(locator, tuple) else WebDriverWait(self._driver, 15).until(
+            expected_conditions.presence_of_element_located((by, locator)))
+
+        return element
 
     def back(self, num=1):
         for i in range(num):
