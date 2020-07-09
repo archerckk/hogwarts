@@ -42,7 +42,7 @@ def pytest_collection_modifyitems(
 
         # 自定义添加标签
         if 'find' in item.nodeid:
-            item.add_marker(pytest.mark.find)
+            item.add_marker(pytest.mark._find)
         elif 'update' in item.nodeid:
             item.add_marker(pytest.mark.update)
 

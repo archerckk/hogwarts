@@ -12,22 +12,22 @@ class EditInfoPage(BasePage):
     _save_info_loc = (By.XPATH, '//*[@text="保存"]')
 
     def edit_name(self, name):
-        self.find(*self._name_loc).send_keys(name)
+        self._find(*self._name_loc).send_keys(name)
         return self
 
     def edit_gender(self, gender):
-        self.find_and_click(*self._gender_loc)
+        self._find_and_click(*self._gender_loc)
         if gender == '男':
-            self.find_and_click(*self._gender_man_loc)
+            self._find_and_click(*self._gender_man_loc)
         else:
-            self.find_and_click(*self._gender_female_loc)
+            self._find_and_click(*self._gender_female_loc)
         return self
 
     def edit_phone_number(self, phone):
-        self.find(*self._edit_phone_number_loc).send_keys(phone)
+        self._find(*self._edit_phone_number_loc).send_keys(phone)
         return self
 
     def save_info(self):
         from appium_hw2.pages.add_member_method_page import AddMemberMethodPage
-        self.find_and_click(*self._save_info_loc)
+        self._find_and_click(*self._save_info_loc)
         return AddMemberMethodPage(self._driver)
