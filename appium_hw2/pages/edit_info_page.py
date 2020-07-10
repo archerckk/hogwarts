@@ -16,11 +16,11 @@ class EditInfoPage(BasePage):
         return self
 
     def edit_gender(self, gender):
-        self._find_and_click(*self._gender_loc)
+        self._find_and_click(self._gender_loc)
         if gender == '男':
-            self._find_and_click(*self._gender_man_loc)
+            self._find_and_click(self._gender_man_loc)
         else:
-            self._find_and_click(*self._gender_female_loc)
+            self._find_and_click(self._gender_female_loc)
         return self
 
     def edit_phone_number(self, phone):
@@ -29,5 +29,5 @@ class EditInfoPage(BasePage):
 
     def save_info(self):
         from appium_hw2.pages.add_member_method_page import AddMemberMethodPage
-        self._find_and_click(*self._save_info_loc)
+        self._find_and_click(self._save_info_loc)
         return AddMemberMethodPage(self._driver)

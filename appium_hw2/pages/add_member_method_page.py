@@ -9,7 +9,7 @@ class AddMemberMethodPage(BasePage):
     def manual_add(self):
         from appium_hw2.pages.edit_info_page import EditInfoPage
 
-        self._find_and_click(*self._manual_add_loc)
+        self._find_and_click(self._manual_add_loc)
 
         return EditInfoPage(self._driver)
 

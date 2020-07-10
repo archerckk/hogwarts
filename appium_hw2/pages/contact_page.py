@@ -10,7 +10,7 @@ class ContactPage(BasePage):
     By.XPATH, '//android.widget.LinearLayout//android.widget.RelativeLayout/android.widget.TextView')
 
     def add_member(self):
-        self._find_and_click(*self._add_member_loc)
+        self._find_and_click(self._add_member_loc)
 
         return AddMemberMethodPage(self._driver)
 

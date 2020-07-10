@@ -8,5 +8,5 @@ class MainPage(BasePage):
     _contact_tab_loc = (By.XPATH, '//*[@class="android.widget.LinearLayout"]//*[@text="通讯录"]')
 
     def goto_contacts(self):
-        self._find_and_click(*self._contact_tab_loc)
+        self._find_and_click(self._contact_tab_loc)
         return ContactPage(self._driver)

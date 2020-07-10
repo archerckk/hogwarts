@@ -10,20 +10,28 @@ class BasePage:
         self._driver = driver
 
     def _find(self, by, locator=None):
-        element = WebDriverWait(self._driver, 15).until(expected_conditions.presence_of_element_located(by)) if \
-            isinstance(locator, tuple) else WebDriverWait(self._driver, 15).until(
-            expected_conditions.presence_of_element_located((by, locator)))
+        # 兼容元组跟多元素传入
+
+        element = self._driver.find_element(*by) if isinstance(by, tuple) else self._driver.find_element(by, locator)
 
         return element
 
     def _finds(self, by, locator=None):
-        elements = WebDriverWait(self._driver, 15).until(expected_conditions.presence_of_all_elements_located(by)) if \
-            isinstance(locator, tuple) else WebDriverWait(self._driver, 15).until(
-            expected_conditions.presence_of_all_elements_located((by, locator)))
+        # 兼容元组跟多元素传入
+
+        elements = self._driver.find_elements(*by) if isinstance(by, tuple) else self._driver.find_elements(by, locator)
 
         return elements
 
+    def _find_focus(self, by, locator=None):
+        element = WebDriverWait(self._driver, 15).until(expected_conditions.presence_of_element_located(by)) if \
+            isinstance(locator, tuple) else WebDriverWait(self._driver, 15).until(
+            expected_conditions.presence_of_element_located((by, locator)))
+        return element
+
     def confirm_element_disappear(self, by, locator=None):
+        # 确认元素删除成功
+
         element = WebDriverWait(self._driver, 15).until_not(expected_conditions.presence_of_element_located(by)) if \
             isinstance(locator, tuple) else WebDriverWait(self._driver, 15).until_not(
             expected_conditions.presence_of_element_located((by, locator)))
@@ -40,8 +48,8 @@ class BasePage:
             f'instance(0));')
         return element
 
-    def _find_and_click(self, *locator):
-        self._find(*locator).click()
+    def _find_and_click(self, by):
+        self._find(by).click()
 
     def get_toast(self):
-        return self._find(By.XPATH, '//*[@class="android.widget.Toast"]').text
+        return self._find_focus(By.XPATH, '//*[@class="android.widget.Toast"]').text

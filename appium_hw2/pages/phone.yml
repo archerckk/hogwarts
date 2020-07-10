@@ -18,3 +18,4 @@ mumu_wework:
   noReset: true
   unicodeKeyBoard: true
   resetKeyBoard: true
+  skipServerInstallation: true
