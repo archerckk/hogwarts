@@ -25,7 +25,7 @@ class BasePage:
 
     def _find_focus(self, by, locator=None):
         element = WebDriverWait(self._driver, 15).until(expected_conditions.presence_of_element_located(by)) if \
-            isinstance(locator, tuple) else WebDriverWait(self._driver, 15).until(
+            isinstance(by, tuple) else WebDriverWait(self._driver, 15).until(
             expected_conditions.presence_of_element_located((by, locator)))
         return element
 
@@ -33,7 +33,7 @@ class BasePage:
         # 确认元素删除成功
 
         element = WebDriverWait(self._driver, 15).until_not(expected_conditions.presence_of_element_located(by)) if \
-            isinstance(locator, tuple) else WebDriverWait(self._driver, 15).until_not(
+            isinstance(by, tuple) else WebDriverWait(self._driver, 15).until_not(
             expected_conditions.presence_of_element_located((by, locator)))
         return element
 
