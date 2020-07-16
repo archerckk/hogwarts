@@ -4,7 +4,7 @@ from appium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
-
+import os
 """
 1、编写添加联系人测试用例
 2、编写删除联系人测试用例
