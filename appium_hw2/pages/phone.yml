@@ -1,5 +1,5 @@
 mumu_xueqiu:
-  automationName: Appium
+#  automationName: Appium
   deviceName: 127.0.0.1:7555
   platformName: Android
   platformVersion: 6.0.1
