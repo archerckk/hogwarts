@@ -4,10 +4,17 @@ from selenium.webdriver import Remote
 import os
 
 
+
 class TestSeleniumGridDemo:
+    _env = 'home'
 
     def setup(self):
-        self.hub_url = 'http://10.8.8.186:4444/wd/hub'
+
+        if self._env == 'home':
+            self.hub_url = 'http://192.168.163.1:4444/wd/hub'
+        elif self._env == 'company':
+            self.hub_url = 'http://10.8.8.186:4444/wd/hub'
+
         self.web_browser = os.getenv('browser', None)
 
         if self.web_browser == 'chrome':
