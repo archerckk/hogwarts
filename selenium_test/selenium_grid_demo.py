@@ -18,11 +18,14 @@ class TestSeleniumGridDemo:
         elif self.web_browser == 'edge':
             capbilities = DesiredCapabilities.EDGE.copy()
             # capbilities['platform']='WIN10'
-            capbilities['browser-version']='84'
+            capbilities['browser-version']='83'
             capbilities['executable_path']='msedgedriver.exe'
             # capbilities['visual']='true'
             self.driver = Remote(
                 command_executor=self.hub_url, desired_capabilities=capbilities)
+        elif self.web_browser == 'firefox':
+            capbilities = DesiredCapabilities.FIREFOX.copy()
+            self.driver = Remote(command_executor=self.hub_url, desired_capabilities=capbilities)
 
     def teardown(self):
         self.driver.quit()
