@@ -5,7 +5,6 @@
       "platform": "WIN10",
       "maxInstances": 1,
       "webdriver.edge.driver": "msedgedriver.exe",
-      "browser-version": "84",
       "seleniumProtocol": "WebDriver"
     }
   ],

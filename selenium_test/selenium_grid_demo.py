@@ -7,7 +7,7 @@ import os
 class TestSeleniumGridDemo:
 
     def setup(self):
-        self.hub_url = 'http://192.168.163.1:4444/wd/hub'
+        self.hub_url = 'http://10.8.8.186:4444/wd/hub'
         self.web_browser = os.getenv('browser', None)
         if self.web_browser == 'chrome':
             capbilities = DesiredCapabilities.CHROME.copy()
@@ -18,7 +18,7 @@ class TestSeleniumGridDemo:
         elif self.web_browser == 'edge':
             capbilities = DesiredCapabilities.EDGE.copy()
             # capbilities['platform']='WIN10'
-            capbilities['browser-version']='83'
+            # capbilities['browser-version']='83'
             capbilities['executable_path']='msedgedriver.exe'
             # capbilities['visual']='true'
             self.driver = Remote(

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-browser_dict=('firefox' 'chrome')
+browser_dict=('edge' 'chrome' )
 for browser in ${browser_dict[*]};
 do
     echo $browser
