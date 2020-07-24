@@ -27,7 +27,7 @@ class BasePage(object):
 
     # 查找单个元素的方法封装显式等待
     def _find(self, *by):
-        return WebDriverWait(self._driver, 15).until(expected_conditions.presence_of_element_located(*by))
+        return WebDriverWait(self._driver, 15).until(expected_conditions.visibility_of_element_located(*by))
 
     # 查找多个元素的方法封装显式等待
     def _finds(self, *by):
