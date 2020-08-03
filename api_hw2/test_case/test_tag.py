@@ -12,6 +12,7 @@ class TestTag:
         with FileLock("session.lock"):
             we_work=WeWork()
             token=we_work.get_token()
+            print('123')
         yield token
 
     def setup(self):
@@ -34,6 +35,7 @@ class TestTag:
         res = self.tag.tag_delete(1, token)
         assert res['errmsg']=='deleted'
 
+    @pytest.mark.parametrize('tagname', ['tag1', 'tag2', 'tag3'])
     def test_all(self, tagname, token):
         #新增一个tag
         try :
