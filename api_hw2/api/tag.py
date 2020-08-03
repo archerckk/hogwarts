@@ -53,7 +53,7 @@ class Tag(BaseApi):
     def tag_list_get(self,token):
         req = {
             'method': 'get',
-            'url': 'https://qyapi.weixin.qq.com/cgi-bin/tag/get',
+            'url': 'https://qyapi.weixin.qq.com/cgi-bin/tag/list',
             'params': {
                 'access_token': token
             }
