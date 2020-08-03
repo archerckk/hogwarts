@@ -6,14 +6,40 @@ from api_hw2.api.wework import WeWork
 from filelock import FileLock
 
 
+def produce_expensive_data():
+    we_work = WeWork()
+    token = we_work.get_token()
+    return token
+
+
 class TestTag:
     @pytest.fixture(scope='session')
-    def token(self):
-        with FileLock("session.lock"):
-            we_work=WeWork()
-            token=we_work.get_token()
-            print('123')
-        yield token
+    def token(self, worker_id, tmp_path_factory):
+        # with FileLock("session.lock"):
+        #     we_work=WeWork()
+        #     token=we_work.get_token()
+        #     print('123')
+        # yield token
+
+        if not worker_id:
+            # not executing in with multiple workers, just produce the data and let
+            # pytest's fixture caching do its job
+            return produce_expensive_data()
+
+        # get the temp directory shared by all workers
+        root_tmp_dir = tmp_path_factory.getbasetemp().parent
+
+        fn = root_tmp_dir / "data.json"
+        with FileLock(str(fn) + ".lock"):
+            if fn.is_file():
+                data = json.loads(fn.read_text())
+            else:
+                data = produce_expensive_data()
+                print(data)
+                fn.write_text(json.dumps(data))
+        return data
+
+
 
     def setup(self):
         self.tag=Tag()
@@ -35,8 +61,7 @@ class TestTag:
         res = self.tag.tag_delete(1, token)
         assert res['errmsg']=='deleted'
 
-    @pytest.mark.parametrize('tagname', ['tag1', 'tag2', 'tag3'])
-    def test_all(self, tagname, token):
+    def test_all(self, token):
         #新增一个tag
         try :
             res=self.tag.tag_add('tag1',token)
