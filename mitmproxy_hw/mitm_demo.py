@@ -19,9 +19,9 @@ class Template:
         render = pystache.Renderer(escape=lambda u: u)  # 完全禁用转义符
         print(os.path.abspath(os.getcwd()))
         with open(path) as f:
-            content = f.read()
-            parsed = pystache.parse(content)
-            result = render.render(parsed, dict)
+            content = f.read() #读取模板内容
+            parsed = pystache.parse(content) #将模板内容转换成为模板对象
+            result = render.render(parsed, dict) #模板对象还有字典内容整合起来
             return result
 
 
