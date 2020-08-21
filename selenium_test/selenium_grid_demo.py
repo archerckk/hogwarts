@@ -6,7 +6,7 @@ import os
 
 
 class TestSeleniumGridDemo:
-    _env = 'home'
+    _env = 'clould'
 
     def setup(self):
 
@@ -14,6 +14,8 @@ class TestSeleniumGridDemo:
             self.hub_url = 'http://192.168.163.1:4444/wd/hub'
         elif self._env == 'company':
             self.hub_url = 'http://10.8.8.186:4444/wd/hub'
+        elif self._env=='clould':
+            self.hub_url= 'http://106.55.63.242:5001/wd/hub'
 
         self.web_browser = os.getenv('browser', None)
 
@@ -44,4 +46,5 @@ class TestSeleniumGridDemo:
 
     def test_demo(self):
         self.driver.get('http://www.baidu.com')
+        print(self.driver.title)
         sleep(2)
