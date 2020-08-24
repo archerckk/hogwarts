@@ -15,7 +15,7 @@ class TestSeleniumGridDemo:
         elif self._env == 'company':
             self.hub_url = 'http://10.8.8.186:4444/wd/hub'
         elif self._env=='clould':
-            self.hub_url= 'http://106.55.63.242:5001/wd/hub'
+            self.hub_url= 'http://192.168.24.128:5001/wd/hub'
 
         self.web_browser = os.getenv('browser', None)
 
