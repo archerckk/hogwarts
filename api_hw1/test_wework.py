@@ -24,7 +24,7 @@ class TestWeWork:
         }
         res = self.session.post(f'https://qyapi.weixin.qq.com/cgi-bin/user/create',
                                 json=data)
-
+        print(res.json())
         assert res.json()["errmsg"] == 'created'
 
     def test_get_member(self):
@@ -43,6 +43,7 @@ class TestWeWork:
         }
         res = self.session.post(f'https://qyapi.weixin.qq.com/cgi-bin/user/update',
                                 json=data)
+        print(res.json())
         assert res.json()["errmsg"] == 'updated'
 
     def test_delete_member(self):
@@ -50,4 +51,5 @@ class TestWeWork:
             'userid': 'zhangsan'
         }
         res = self.session.get(f'https://qyapi.weixin.qq.com/cgi-bin/user/delete', params=params)
+        print(res.json())
         assert res.json()["errmsg"] == 'deleted'
