@@ -54,6 +54,7 @@ class TestDemo:
         self.driver.find_element_by_xpath('//*[@resource-id="com.xueqiu.android:id/title_container"]'
                                           '//android.widget.TextView[3]').click()
         no_user_text = self.driver.find_element_by_xpath("//*[@text='阿里巴巴官方账号']").text
+        print("查找的账号：",no_user_text)
         assert no_user_text == '阿里巴巴官方账号'
 
     def test_uiautomator_use(self):
@@ -68,6 +69,9 @@ class TestDemo:
     def test_scorll_find_ele(self):
         title_hot = 'resourceId("com.xueqiu.android:id/title_text").text("推荐")'
         self.driver.find_element_by_android_uiautomator(title_hot).click()
+        print('点击推荐')
 
         scorll_text = 'new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().text("老李茶馆").instance(0));'
         self.driver.find_element_by_android_uiautomator(scorll_text).click()
+        print('点击【老李茶馆】')
+        assert '老李茶馆'in self.driver.page_source
