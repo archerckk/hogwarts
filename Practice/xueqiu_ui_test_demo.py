@@ -3,6 +3,8 @@ from time import sleep
 from appium import webdriver
 import yaml
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class TestDemo:
@@ -16,6 +18,22 @@ class TestDemo:
     def teardown(self):
         self.driver.quit()
 
+    def find_show_wait(self, by, locator=None):
+        if isinstance(by, tuple):
+            element = WebDriverWait(self.driver, 15).until(expected_conditions.presence_of_element_located(by))
+            return element
+        else:
+            element = WebDriverWait(self.driver, 15).until(
+                expected_conditions.presence_of_element_located((by, locator)))
+            return element
+
+    def find_show_wait2(self, by, locator=None):
+        element = WebDriverWait(self.driver, 15).until(
+            expected_conditions.presence_of_element_located(by)) if isinstance(
+            by, tuple) else WebDriverWait(self.driver, 15).until(expected_conditions.presence_of_element_located(
+            (by, locator)))
+        return element
+
     def test_search_price(self):
         self.driver.find_element_by_id("com.xueqiu.android:id/home_search").click()
         self.driver.find_element_by_id("com.xueqiu.android:id/search_input_text").send_keys('阿里巴巴')
@@ -26,7 +44,9 @@ class TestDemo:
         assert float(current_price) > 200
 
     def test_search_attribute(self):
-        home_search_ele = self.driver.find_element_by_id("com.xueqiu.android:id/tv_search")
+        tv_search_loc = ('id', 'com.xueqiu.android:id/tv_search')
+
+        home_search_ele = self.find_show_wait2(tv_search_loc)
         home_search_enable = home_search_ele.is_enabled()
         home_search_location = home_search_ele.location
         home_search_ele_rect = home_search_ele.rect
@@ -48,13 +68,14 @@ class TestDemo:
             print('索索失败')
 
     def test_xpath_father_son_element_locate(self):
+
         self.driver.find_element_by_id("com.xueqiu.android:id/home_search").click()
         self.driver.find_element_by_id("com.xueqiu.android:id/search_input_text").send_keys('阿里巴巴')
         self.driver.find_element_by_xpath('//*[@resource-id="com.xueqiu.android:id/name"][@text="阿里巴巴"]').click()
         self.driver.find_element_by_xpath('//*[@resource-id="com.xueqiu.android:id/title_container"]'
                                           '//android.widget.TextView[3]').click()
         no_user_text = self.driver.find_element_by_xpath("//*[@text='阿里巴巴官方账号']").text
-        print("查找的账号：",no_user_text)
+        print("查找的账号：", no_user_text)
         assert no_user_text == '阿里巴巴官方账号'
 
     def test_uiautomator_use(self):
@@ -74,4 +95,4 @@ class TestDemo:
         scorll_text = 'new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().text("老李茶馆").instance(0));'
         self.driver.find_element_by_android_uiautomator(scorll_text).click()
         print('点击【老李茶馆】')
-        assert '老李茶馆'in self.driver.page_source
+        assert '老李茶馆' in self.driver.page_source
