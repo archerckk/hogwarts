@@ -30,3 +30,4 @@ class TestApiDemo:
         xml="""<?xml version='10.0' encoding='utf-8'><a>test</a>"""
         headers={'Content-Type':'application/xml'}
         r=requests.post(f"{self.host}/post")
+        print('这是测试代码')
