@@ -1,16 +1,6 @@
 import pytest
 import yaml
-
-
-@pytest.fixture()
-def prepare():
-    print('开始计算')
-    yield '调用fixture'
-    print('计算结束')
-
-
 from typing import List
-
 import pytest
 import yaml
 from _pytest.config import Config
@@ -18,11 +8,19 @@ from _pytest.nodes import Item
 from requests import Session
 
 
-@pytest.fixture()
-def prepare():
-    print('开始计算')
-    yield '调用fixture'
-    print('计算结束')
+# @pytest.fixture(scope='function')
+# def prepare():
+#     print('开始计算')
+#     yield '调用fixture'
+#     print('计算结束')
+
+
+
+# @pytest.fixture()
+# def prepare():
+#     print('开始计算')
+#     yield '调用fixture'
+#     print('计算结束')
 
 
 def pytest_collection_modifyitems(
