@@ -7,12 +7,16 @@ from _pytest.config import Config
 from _pytest.nodes import Item
 from requests import Session
 
+test_value=0
 
-# @pytest.fixture(scope='function')
-# def prepare():
-#     print('开始计算')
-#     yield '调用fixture'
-#     print('计算结束')
+@pytest.fixture(scope='class',autouse=True)
+def prepare():
+    global test_value
+    print('开始计算')
+    test_value+=1
+    print(f'现在test_value的值为：{test_value}')
+    yield '调用fixture'
+    print('计算结束')
 
 
 

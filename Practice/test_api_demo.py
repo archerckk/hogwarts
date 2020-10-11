@@ -5,11 +5,11 @@ from pprint import pprint
 test_resut = 'test'
 
 
-@pytest.fixture(scope='function')
-def login():
-    print('执行登录')
+# @pytest.fixture(scope='function')
+# def login():
+#     print('执行登录')
 
-
+# @pytest.mark.usefixtures('prepare')
 class TestApiDemo:
     host = 'http://httpbin.testing-studio.com/'
 
@@ -19,8 +19,9 @@ class TestApiDemo:
     def teardown(self):
         print('执行了teardown')
 
-    def test_get(self):
-        payload = {"key1": "value1", "key2": "value2"}
+    @pytest.mark.parametrize('a',['value1','value2'],ids=['参数1','参数2'])
+    def test_get(self,a):
+        payload = {"key1": a, "key2": "value2"}
         r = requests.get(f'{self.host}/get', params=payload)
         pprint(r.json())
         test_resut = 'test2'
@@ -32,7 +33,6 @@ class TestApiDemo:
         r = requests.post(f"{self.host}/post", data=payload)
         pprint(r.json())
 
-    @pytest.mark.usefixtures()
     def test_file_upload(self):
         files = {'file': open('phone.yml', 'rb')}
         r = requests.post(f"{self.host}/post", files=files)
