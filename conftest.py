@@ -9,7 +9,7 @@ from requests import Session
 
 test_value=0
 
-@pytest.fixture(scope='class',autouse=True)
+# @pytest.fixture(scope='class',autouse=True)
 def prepare():
     global test_value
     print('开始计算')
@@ -57,8 +57,6 @@ def pytest_configure(config):
         "markers", "update: some cases contain find"
     )
 
-
-
 # 注册一个env参数
 def pytest_addoption(parser):
     mygroup = parser.getgroup('hogwarts')  # 先获取一个组名
@@ -68,7 +66,6 @@ def pytest_addoption(parser):
         dest='dev',
         help='check function info'
     )
-
 
 @pytest.fixture(scope='session')
 def cmdoption(request):
