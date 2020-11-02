@@ -22,3 +22,24 @@ def function_have_return():
     :return:返回内容为：【这是一个有返回值的函数"】的字符串
     """
     return '这是一个有返回值的函数'
+
+
+var_a=[1,2,5,6,9]
+# def my_max(var_a):
+#     result=0
+#     for i in var_a:
+#         if i>result:
+#             result=i
+#         else:
+#             continue
+#     return result
+
+def my_max2(var_a:list):
+    var_a.sort()
+
+    return var_a[-1]
+
+
+if __name__ == '__main__':
+    # print(my_max(var_a))
+    print(my_max2(var_a))

@@ -125,11 +125,15 @@ class Test_demo:
         self.driver.find_element(By.ID, 'kw').send_keys('selenium test')
         # self.driver.find_element_by_id('su').click()
         self.driver.execute_script("document.getElementById('su').click()")
-        self.driver.execute_script("document.documentElement.scrollTop=2000")
+        # self.driver.execute_script("document.documentElement.scrollTop=10000")
+        # touch=TouchActions(self.driver)
+        # touch.scroll_from_element(self.driver.find_element_by_id('su'),10,10000).perform()
+        self.driver.execute_script('window.scrollBy(0,10000)')
         self.driver.find_element(By.CSS_SELECTOR, '#page a:nth-last-child(1)').click()  # 可以点击成功
         sleep(3)
-        for code in ['return JSON.stringify(performance.timing)', 'return document.title']:
-            print(self.driver.execute_script(code))
+        for js in ['return JSON.stringify(performance.timing)', 'return document.title']:
+            print(self.driver.execute_script(js))
+        print(self.driver.current_url)
         # print(self.driver.execute_script('return document.title'))
 
     @allure.story('测试12306的时间修改')

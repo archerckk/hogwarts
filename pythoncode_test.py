@@ -13,3 +13,30 @@ class Test_demo:
         print(a)  # a是全局变量所以模块里面都有效
         # print(b) #b是函数内定义的只在函数内有效，其他函数无法使用
         print(self.c)  # 这是在属于Test_demo类变量，所以这类里面的方法都有效
+
+
+
+def test():
+    try:
+        raise ValueError('这是一个值错误')
+    except ValueError as e:
+        print(e)
+        return
+    finally:
+        print('done')
+
+test()
+
+
+var_a=[1,2,5,6,9]
+def my_max(var_a):
+    result=0
+    for i in var_a:
+        if i>result:
+            result=i
+        else:
+            continue
+    return result
+if __name__ == '__main__':
+    print(my_max(var_a))
+

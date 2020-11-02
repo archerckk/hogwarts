@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # 压测脚本模板中设定的压测时间应为60秒
-export jmx_template="meican"
+export jmx_template="nginx"
 export suffix=".jmx"
 export jmx_template_filename="${jmx_template}${suffix}"
 export os_type=`uname`
@@ -11,7 +11,7 @@ export os_type=`uname`
 
 echo "美餐网自动化压测全部开始"
 # 压测并发数列表
-thread_number_array=(10 20 30 40 50)
+thread_number_array=( 400 500 600 700 800 900 1000 )
 for num in "${thread_number_array[@]}"
 do
     # 生成对应压测线程的jmx文件变量
