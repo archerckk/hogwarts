@@ -1,0 +1,3 @@
+pararms_del:
+  - [ast,cc,code3812560245,conn,dev_name,devi,idfa,idfv,imei,imsi,channel,cv,country,lang,sign_from,
+     lc,logid,mtid,mtxid,ndid,osversion,proto,sid,smid,source_info,ua,uid,xid]

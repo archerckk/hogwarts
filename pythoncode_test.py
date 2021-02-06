@@ -3,6 +3,9 @@ print('这是一个插班同学补交的python实战1作业')
 a = '这是全局变量，整个模块都可以使用'
 
 
+
+
+
 class Test_demo:
 
     def setup(self):

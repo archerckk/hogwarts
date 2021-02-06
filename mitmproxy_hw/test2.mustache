@@ -1,0 +1,36 @@
+name: 生成用例
+base_url: ${ENV(vins_host)}
+variables:
+    uid: ${ENV(vins_uid)}
+    sign_from: iOS
+    status_code: 200
+    dm_error: 0
+    {{#params}}
+        {{.}}
+    {{/params}}
+
+request:
+    method: {{method}}
+    url: {{api}}
+    headers:
+        Authorization: ''
+        Client-TimeStamp: ''
+    params:
+        uid: $uid
+        sid: ${ENV(vins_sid)}
+        cv: ${ENV(vins_cv)}
+        lang: ${ENV(lang)}
+        country: ${ENV(vins_country)}
+        sign_from: $sign_from
+        {{#params}}
+            {{.}}
+        {{/params}}
+
+
+setup_hooks:
+    - ${setup_hook_signature($request)}
+validate:
+    - eq: [status_code, $status_code]
+    - eq: [json.dm_error, $dm_error]
+
+

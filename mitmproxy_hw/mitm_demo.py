@@ -1,7 +1,7 @@
 import os
 import sys
 from mitmproxy import http
-
+import yaml
 # from test_mitmproxy2.template import Template
 
 addon_dir = os.path.dirname(__file__)
@@ -11,6 +11,17 @@ print(addon_dir)
 import os
 
 import pystache
+
+def get_config_data():
+    with open('D:\hogwarts\mitmproxy_hw\config.yml')as f:
+        data=yaml.safe_load(f)
+    return data
+
+
+
+
+
+
 
 
 class Template:
@@ -27,20 +38,34 @@ class Template:
 
 def response(flow: http.HTTPFlow):
     method = flow.request.method
-    print("测试方法打印：", method.__repr__())
-    url = flow.request.pretty_url.split('?')[0]
-    print('=' * 80)
-    print(flow.request.query.fields)
-    print('=' * 80)
-    params = [{k: v} for k, v in flow.request.query.fields]
-    cookies = [{k: v} for k, v in flow.request.cookies.fields]
-    data = {
-        "method": method.__repr__(),
-        "url": url.__repr__(),
-        "params": params,
-        "cookies": cookies
-    }
-    # content=Template.render(addon_dir+"/test.mustache", data)
-    # # print("测试代码：",content)
-    # with open(r'D:\Hogwarts\mitmproxy_hw\test.py','w')as f:
-    #     f.write(content)
+    api= flow.request.path.split('?')[0]
+
+
+
+    if api == '/api/payment/info':
+        print('api为：',api)
+        print("测试方法打印：", method.__repr__())
+        url = flow.request.pretty_url.split('?')[0]
+
+        data = get_config_data()['pararms_del']
+
+        for i in data:
+            print(i)
+
+        print('=' * 200)
+        print(flow.request.query.fields)
+        print('=' * 200)
+        params = [{k: v} for k, v in flow.request.query.fields for d in data if k not in d and k.isalpha()==True ]
+        # cookies = [{k: v} for k, v in flow.request.cookies.fields]
+
+        print('params实际内容为：',params)
+        data = {
+            "api": api,
+            "method": method.__repr__(),
+            "params": params,
+        }
+
+        content=Template.render(addon_dir+"/test2.mustache", data)
+        print("测试代码：",content)
+        with open(r'D:\Hogwarts\mitmproxy_hw\result.yml','w')as f:
+            f.write(content)
