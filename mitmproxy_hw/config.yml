@@ -1,3 +1,19 @@
 pararms_del:
-  - [ast,cc,code3812560245,conn,dev_name,devi,idfa,idfv,imei,imsi,channel,cv,country,lang,sign_from,
-     lc,logid,mtid,mtxid,ndid,osversion,proto,sid,smid,source_info,ua,uid,xid]
+  - [ast,code3812560245,conn,dev_name,devi,idfa,idfv,imei,imsi,cv,country,lang,sign_from,
+     logid,mtid,mtxid,ndid,osversion,proto,sid,smid,source_info,uid,xid,session]
+api_list:
+  - /api/v2/message/send
+  - /api/user/update_profile
+  - /api/user/update_info
+  - /api/user/profile/add_pic
+  - /api/user/profile/update_pic
+  - /api/user/profile/del_pic
+  - /api/user/profile/get_pics
+  - /api/user/profile/reset_pics
+  - /api/user/verify/select
+  - /api/user/info/head_frame_select
+  - /api/user/info/verify_list_new
+  - /api/user_find/get_find_me_settings
+  - /api/user_find/set_find_me_settings
+  - /api/user_find/get_find_me_info
+  - /api/user/update_sex_price

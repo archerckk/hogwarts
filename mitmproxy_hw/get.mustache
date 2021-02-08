@@ -5,9 +5,9 @@ variables:
     sign_from: iOS
     status_code: 200
     dm_error: 0
-    {{#params}}
-        {{.}}
-    {{/params}}
+{{#variables}}
+    {{.}}
+{{/variables}}
 
 request:
     method: {{method}}
@@ -22,9 +22,9 @@ request:
         lang: ${ENV(lang)}
         country: ${ENV(vins_country)}
         sign_from: $sign_from
-        {{#params}}
-            {{.}}
-        {{/params}}
+    {{#params}}
+        {{.}}
+    {{/params}}
 
 
 setup_hooks:

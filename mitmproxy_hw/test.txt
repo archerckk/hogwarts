@@ -25,3 +25,7 @@
                     "ua": "iPhone10_3",
                     "uid": "100245",
                     "xid": "825",
+
+
+     mitmdump -p 8080 -s mitmproxy_hw/mitm_demo.py
+
