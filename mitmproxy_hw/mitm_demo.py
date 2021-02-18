@@ -6,7 +6,6 @@ import yaml
 import os
 import json
 import pystache
-import fcntlock
 
 
 addon_dir = os.path.dirname(__file__)
@@ -136,6 +135,3 @@ def response(flow: http.HTTPFlow):
 
         with open(rf'{addon_dir}\api_generated\%s_api.yml' % (filename), 'w')as f:
             f.write(content)
-            fcntlock.lock(f,fcntlock.LOCK_EX)
-            f.flush()
-            fcntlock.unlock(f)
