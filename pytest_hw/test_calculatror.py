@@ -8,6 +8,7 @@ class Test_Calculator:
     def setup_class(self):
         self.cal = Calculator()
 
+    @pytest.mark.story('测试')
     @pytest.mark.parametrize('a,b,c', yaml.safe_load(open('test_data.yml', encoding='UTF-8'))['add'])
     def test_add(self, a, b, c, prepare):
         assert c == self.cal.add(a, b)

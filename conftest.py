@@ -85,3 +85,8 @@ def cmdoption(request):
             datas = yaml.safe_load(f)
 
     return datas
+
+
+def pytest_generate_tests(metafunc:"Metafunc")->None:
+    if "param" in metafunc.fixturenames:
+        metafunc.parametrize("param",metafunc.module.par_to_test,ids=metafunc.module.case,scope='function')
